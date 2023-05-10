@@ -1,0 +1,307 @@
+background(0, 174, 255); /// Global Variables
+var grassXs = [];
+var treeXs = [];
+var xPositions = [];
+var yPositions = [];
+var speed = 1;
+var score = 0;
+var currentscene = 0;
+var stillPlaying = true;
+var StartTime;
+
+var drawbitHead = function(bitMojiX,bitMojiY,bitHeight) {
+
+noStroke();
+fill(168, 137, 76);//skintone
+ellipse(bitMojiX,bitMojiY,83*bitHeight/150,100*bitHeight/150);//head
+fill(255, 255, 255);
+arc(bitMojiX-43*bitHeight/150,bitMojiY+35*bitHeight/150,28*bitHeight/150,55*bitHeight/150,0*bitHeight/150,361);//left chisel
+arc(bitMojiX+43*bitHeight/150,bitMojiY+35*bitHeight/150,28*bitHeight/150,55*bitHeight/150,0*bitHeight/150,361);//right chisel
+
+fill(10, 6, 6);
+ellipse(bitMojiX-26*bitHeight/150,bitMojiY-41*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 1
+ellipse(bitMojiX-5*bitHeight/150,bitMojiY-41*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 2
+ellipse(bitMojiX-5*bitHeight/150,bitMojiY-27*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 3
+ellipse(bitMojiX-50*bitHeight/150,bitMojiY-22*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 4
+ellipse(bitMojiX-48*bitHeight/150,bitMojiY-41*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 5
+ellipse(bitMojiX-26*bitHeight/150,bitMojiY-26*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 6
+ellipse(bitMojiX+19*bitHeight/150,bitMojiY-41*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 7
+ellipse(bitMojiX+41*bitHeight/150,bitMojiY-41*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 8
+ellipse(bitMojiX+44*bitHeight/150,bitMojiY-24*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 9
+ellipse(bitMojiX+18*bitHeight/150,bitMojiY-28*bitHeight/150,33*bitHeight/150,32*bitHeight/150);//hair curl 10
+
+fill(255, 255, 255);
+ellipse(bitMojiX+19*bitHeight/150,bitMojiY,20*bitHeight/150,20*bitHeight/150);//right eye
+fill(120, 74, 17);
+ellipse(bitMojiX+19*bitHeight/150,bitMojiY,7*bitHeight/150,8*bitHeight/150);//right pupil
+fill(255, 255, 255);
+ellipse(bitMojiX-16*bitHeight/150,bitMojiY,20*bitHeight/150,20*bitHeight/150);// left eye
+fill(120, 74, 17);
+ellipse(bitMojiX-16*bitHeight/150,bitMojiY,7*bitHeight/150,8*bitHeight/150);//left pupil
+stroke(0,0,0); 
+
+fill(156, 123, 53);//skintone
+bezier(bitMojiX,bitMojiY+11*bitHeight/150,bitMojiX,bitMojiY+11*bitHeight/150,bitMojiX-31*bitHeight/150,bitMojiY+24*bitHeight/150,bitMojiX+1*bitHeight/150,bitMojiY+24*bitHeight/150);//nose
+fill(255, 255, 255);//white for the teeth
+arc(bitMojiX,bitMojiY+32*bitHeight/150,30*bitHeight/150,13*bitHeight/150,1*bitHeight/150,180);//mouth
+line(bitMojiX+15*bitHeight/150,bitMojiY+31*bitHeight/150,bitMojiX-15*bitHeight/150,bitMojiY+31*bitHeight/150);//top of mouth
+};/// Carlos head
+
+var drawbitBody = function(bitMojiX,bitMojiY,bitHeight)/// Carlos Body
+{
+fill(89, 17, 184);
+rect(bitMojiX-37*bitHeight/150,bitMojiY+47*bitHeight/150,78*bitHeight/150,98*bitHeight/150,10*bitHeight/150);//shirt1
+quad(bitMojiX-35*bitHeight/150,bitMojiY+48*bitHeight/150,bitMojiX-35*bitHeight/150,bitMojiY+83*bitHeight/150,bitMojiX-54*bitHeight/150,bitMojiY+104*bitHeight/150,bitMojiX-73*bitHeight/150,bitMojiY+84*bitHeight/150);//shirt sleelve
+quad(bitMojiX+41*bitHeight/150,bitMojiY+51*bitHeight/150,bitMojiX+41*bitHeight/150,bitMojiY+88*bitHeight/150,bitMojiX+65*bitHeight/150,bitMojiY+101*bitHeight/150,bitMojiX+76*bitHeight/150,bitMojiY+76*bitHeight/150);//shirt sleelve
+textSize(29*bitHeight/150);
+fill(183, 47, 204);
+text("CL", bitMojiX-16*bitHeight/150, bitMojiY+83*bitHeight/150);//text on the shirt 
+};
+var drawbitMoji = function(bitMojiX,bitMojiY,bitHeight) {
+    drawbitHead(bitMojiX,bitMojiY,bitHeight);
+    drawbitBody(bitMojiX,bitMojiY,bitHeight);
+};// Carlos head 
+ var drawBitmoji = function(xpos,ypos,bitheight){
+noStroke();
+
+
+
+fill(232, 190, 172);/// Face color
+ellipse(xpos+ (bitheight/150*191),ypos+ (bitheight/150*280),bitheight/150*85,bitheight/150*86); /// face
+
+fill(145, 70, 38);
+ellipse(xpos+ (bitheight/150*190),ypos+ (bitheight/150*251),bitheight/150*95,bitheight/150*43); ///hair
+ellipse(xpos+ (bitheight/150*149),ypos+ (bitheight/150*276),bitheight/150*31,bitheight/150*43);
+
+fill(0, 0, 0);///eyes
+ellipse(xpos+ (bitheight/150*179),ypos+ (bitheight/150*282),bitheight/150*10,bitheight/150*10);
+ellipse(xpos+ (bitheight/150*207),ypos+ (bitheight/150*282),bitheight/150*10,bitheight/150*10);
+
+fill(0,0,0);///mouth
+ellipse(xpos+ (bitheight/150*194),ypos+ (bitheight/150*306),bitheight/150*45,bitheight/150*12);
+
+fill(181, 57, 0);
+arc(xpos+ (bitheight/150*196),ypos+ (bitheight/150*286),bitheight/150*14,bitheight/150*19,60,134);
+
+
+fill(0, 0, 0);
+rect(xpos+ (bitheight/150*134),ypos+ (bitheight/150*321),bitheight/150*121,bitheight/150*79);//shirt
+
+fill(255,255,255);///logo
+rect(xpos+ (bitheight/150*154),ypos+ (bitheight/150*336),bitheight/150*9,bitheight/150*49);
+rect(xpos+ (bitheight/150*154),ypos+ (bitheight/150*336),bitheight/150*20,bitheight/150*11);
+rect(xpos+ (bitheight/150*174),ypos+ (bitheight/150*336),bitheight/150*9,bitheight/150*27);
+rect(xpos+ (bitheight/150*184),ypos+ (bitheight/150*357),bitheight/150*-23,bitheight/150*8);
+
+rect(xpos+ (bitheight/150*214),ypos+ (bitheight/150*335),bitheight/150*10,bitheight/150*50);///logo
+rect(xpos+ (bitheight/150*237),ypos+ (bitheight/150*335),bitheight/150*-37,bitheight/150*11);
+
+
+fill(255,255,255);
+rect(xpos+ (bitheight/150*180),ypos+ (bitheight/150*360),bitheight/150*-8,bitheight/150*26);
+
+}; /// Riley Bitmoji
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+}; /// Start button
+
+Button.prototype.draw = function() {
+    fill(0, 221, 255);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+}; /// Start button draw
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+}; /// Checks for mouse inside
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+var startbutton = new Button({
+    x: 125,
+    y: 200,
+    label: "        Start",
+    onClick: function() {
+        currentscene = 1;
+        StartTime = millis();
+        
+        
+    }
+}); /// Creates start button
+
+
+
+var splashscreen = function() {
+  background(217, 140, 255);
+   drawbitMoji(238,49,80);
+   drawBitmoji(40,-92,81);
+    
+   
+  textSize(28);
+ text("Stick man runner",94,147,232,200);
+ textSize(15);
+ text("Avoid the obstacles and try for a high score", 59,288,1000,1000);
+ text("Use W to Jump", 135,336,1000,1000);
+   startbutton.draw();
+}; /// Function for our splash screen
+var endgame = function() { 
+    background(217, 140, 255);
+   drawbitMoji(238,49,80);
+   drawBitmoji(40,-92,81);
+   textSize(50);
+   text("score",70,189,200,200);
+   text(score,223,190,200,200);
+   textSize(25);
+   text("do you want to play again?",63,251,333,300);
+   
+}; ///Function for our end screen
+mouseClicked = function() {
+    if (currentscene === 0) {
+    startbutton.handleMouseClick();
+    }
+}; /// Mouse Clicked function for our start button
+
+
+
+
+image(getImage("cute/BrownBlock"),0,364,400,37);
+for (var i = 0; i < 25; i++) { 
+    grassXs.push(i*20);
+
+}
+for (var i = 0; i < 5; i++) { 
+    xPositions.push(i);
+}
+for (var i = 0; i < 5; i++) { 
+    treeXs.push(i);
+}
+for (var i = 0; i < xPositions.length; i++) { 
+    speed += 1;
+}
+var Stickman = function(stickx,sticky,stickw)  {
+   ellipse(stickx,sticky,20,20); 
+   ellipse(stickx,sticky+26,8,31);
+   ellipse(stickx-3,sticky+52,6,27);
+   ellipse(stickx+4,sticky+52,6,27);
+   ellipse(stickx+6,sticky+26,4,21);
+   ellipse(stickx-6,sticky+26,4,21);
+   
+   
+};
+
+var stickman = function(x,y) {
+    this.x = x;
+    this.y = y;
+    
+};
+stickman.prototype.draw = function() {
+    this.y = constrain(this.y, 0, height-105);
+    Stickman(this.x, this.y, 40);  
+};
+stickman.prototype.hop = function() {
+    this.y -= 10;
+};
+
+stickman.prototype.fall = function() {
+    this.y += 5;
+};
+stickman.prototype.left = function() {
+  this.x -=5;  
+};
+stickman.prototype.right = function() {
+  this.x +=5;  
+};
+var stickman = new stickman(37,300);
+stickman.draw();
+var gamescreen = function(){
+       background(0, 174, 255);
+       if (speed >= 1) {
+        speed +=0.01;   
+       }
+   
+   fill(255, 0, 0);
+   text("score: " + round((millis()-StartTime)/1000), 256,37);
+   score = round((millis()-StartTime)/1000);
+   fill(252, 255, 87);
+image(getImage("cute/BrownBlock"),0,364,400,37); 
+ for (var i = 0; i < grassXs.length; i++) {
+        image(getImage("cute/GrassBlock"), grassXs[i], height*0.89, 30+speed, 20);
+        grassXs[i] -= speed;
+        if (grassXs[i] <= -20) {
+            grassXs[i] = speed+380;
+             
+        }
+       
+    }
+     for (var i = 0; i < treeXs.length; i++) {
+         xPositions.push(220);
+         yPositions.push(321);
+        image(getImage("cute/TreeTall"),xPositions[i]+200,yPositions[i],45,55);
+        xPositions[i] -= speed;
+        if (xPositions[i] <= -220) {
+            xPositions[i] = width;
+
+
+            
+     if (stickman.x > xPositions[i]-370 && stickman.x < xPositions[i]+370 &&stickman.y > yPositions[i]-40 && stickman.y < yPositions[i]+40 ) {
+             
+    currentscene = 2;
+        }// if player crashes with the objects
+       
+        }
+        }
+     if (keyIsPressed && key.code === 119 && stickman.y <= 350 && stickman.y >= 40) {
+        stickman.hop();// make the W button work
+     }
+    else  {
+        stickman.fall();
+    }
+   
+    
+    if (stickman.y <= 177) {
+        stickman.y = stickman.y+30;
+    }
+     if (stickman.x >= 343 ) {
+        stickman.x = 340;
+    }
+    if (stickman.x <= 36) {
+        stickman.x = 300;
+    }
+    stickman.draw();
+}; /// Function showing game screen
+
+draw = function() {
+
+   if (currentscene ===0) {
+splashscreen();
+}
+
+else if (currentscene === 1){
+    gamescreen();
+}
+else if (currentscene === 2 ) {
+    endgame();
+}
+
+
+    //RESET THE PLAYER IF GOES OUTSIDE THE PLAYING ZONE
+    
+    
+
+}; /// Draw function with if statements for the different screens
+
